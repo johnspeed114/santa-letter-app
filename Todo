@@ -1,0 +1,39 @@
+--Frontend--
+[x] before submit check the input less than or equal to 100chars for main text box
+[] another text for the request received meaning
+
+--js frontend api--
+[x] grab the input info into a variable in js
+[x] use the input info compare to our database
+[] conditionals to push to a different page (if name doesnt exist or success)
+IMPORTANT i am not sure how to post the text while validating the username
+
+--servers--
+[x] if input info(users) doesnt exist or great or equal to 10 yrs old at the api url return,
+the response should be a popup explaining its not avaible or the age is too young
+[x] if exist with right year responded with "request received"
+[x] during this "request received" post this to the database
+[x] TODO: Top priority set up database(USE lowDB in memory light weight)
+[x] TODO: db will need:
+
+- child username (eg. charlie.brown)
+- child's address (eg. 219-1130, Ikanikeisaiganaibaai, Musashino-shi, Tokyo)
+- request free text as was input in the form
+
+(need to figure out if this a just a popup or a different page. It could be very differet
+What is the right way?)
+
+[x] need to check if the santa request has been sent or not (0 or 1)
+[] figure out what freq checker do we need cron job?
+[] implement this freq checker
+[] send email to all pending requests registration with three infos every 15 secs. ()
+-> child username
+-> childs address
+-> request that child wants from the text input
+
+[] send this email to santa@northpole.com and from do_reply_@northpole.com
+(is this part of the etheral emails?)
+[] need to figure out how to set up a smtp server for the email
+in memory database would be the client one. so need to figure that out!
+
+everyone 15 seconds means that you need a cronjob or some sort~!!!!!
