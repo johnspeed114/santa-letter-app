@@ -1,16 +1,18 @@
 import { join, dirname } from 'path';
 import { Low, JSONFile } from 'lowdb';
 import { fileURLToPath } from 'url';
+import { post } from 'request';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-let db;
+const file = join(__dirname, 'db.json');
+const adapter = new JSONFile(file);
+const db = new Low(adapter);
 
 export async function createPost() {
   //Use JSON file for storage
-  const file = join(__dirname, 'db.json');
-  const adapter = new JSONFile(file);
-  db = new Low(adapter);
+
+  // db = new Low(adapter);
 
   // Read data from JSON file, this will set db.data content
   await db.read();
@@ -22,9 +24,7 @@ export async function createPost() {
 
 export async function addPost(username, address, text) {
   //Use JSON file for storage
-  const file = join(__dirname, 'db.json');
-  const adapter = new JSONFile(file);
-  db = new Low(adapter);
+  // db = new Low(adapter);
 
   // Read data from JSON file, this will set db.data content
   await db.read();
@@ -41,6 +41,16 @@ export async function addPost(username, address, text) {
   //db.data ||= { posts: [] };
   db.data.posts.push(newData);
   await db.write();
+}
+
+export async function handleSend() {
+  console.log(db);
+  let posts = await db.data.posts.filter((post) => post.hasSent === '0');
+  for (let post of posts) {
+    post.hasSent.assign('1').value();
+    db.write();
+  }
+  return posts;
 }
 
 //json database structure
