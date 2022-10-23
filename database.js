@@ -1,7 +1,6 @@
 import { join, dirname } from 'path';
 import { Low, JSONFile } from 'lowdb';
 import { fileURLToPath } from 'url';
-import { post } from 'request';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -37,18 +36,19 @@ export async function addPost(username, address, text) {
     text: text,
     hasSent: '0',
   };
-  //commented this out until i create a new post function for adding posts
-  //db.data ||= { posts: [] };
   db.data.posts.push(newData);
   await db.write();
+  console.log(db.data);
 }
 
 export async function handleSend() {
-  console.log(db);
+  await db.read();
   let posts = await db.data.posts.filter((post) => post.hasSent === '0');
   for (let post of posts) {
-    post.hasSent.assign('1').value();
-    db.write();
+    //Should I change sent value here or at the cronjob?
+    post.hasSent = '1';
+    console.log(post.hasSent);
+    await db.write();
   }
   return posts;
 }

@@ -2,11 +2,15 @@ import cronjob from 'node-cron';
 import { handleSend } from '../database.js';
 import { fireMail } from '../helpers/nodemailer.js';
 
+//TODO: not sure how i can send to two function
+//solution maybe we need to promisfy the firemail function?
+//ask JOHNSON about this
 export function cronjobAction() {
   cronjob.schedule('0,15,30,45 * * * * *', async () => {
     try {
       const postVar = await handleSend();
-      if (postVar.length === 0) {
+      console.log(postVar);
+      if (postVar.length !== 0) {
         for (let x = 0; x < postVar.length; x++) {
           const data = await fireMail(
             postVar[x].username,
@@ -16,11 +20,9 @@ export function cronjobAction() {
           //need to add the funciton for changing hassent to 1 in the files
           console.log('dfdfdfd', data);
         }
-        return response.json();
       }
     } catch (err) {
       console.log('Error occurred. ' + err.message);
-      return response.send('error here');
     }
   });
 }

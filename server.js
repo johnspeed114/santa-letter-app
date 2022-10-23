@@ -10,6 +10,8 @@ import { fileURLToPath } from 'url';
 import { fireMail } from './helpers/nodemailer.js';
 import { cronjobAction } from './cronJobs/cronjob.js';
 import data from './db.json' assert { type: 'json' };
+//add to nodemailer to test
+import nodemailer from 'nodemailer';
 
 const app = express();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
